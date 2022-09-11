@@ -53,9 +53,8 @@ Route::post('/', function(){
 });
 
 function new_wallet($BOT_TOKEN, $chat_id){
-    $keys = \App\Services\Empera::generateKeys();
-    $empera_wallet = new \App\Services\Empera($keys['PrivKey']);
-    $accountFields = $empera_wallet->createAccount($chat_id);
+    $keys = generateKeys();
+    $accountFields = createAccount($chat_id, $keys['PrivKey']);
 
 
 
@@ -95,4 +94,35 @@ function start ($BOT_TOKEN, $chat_id){
 
 
     message_to_telegram($BOT_TOKEN, $chat_id, $text_return, $keyboard);
+}
+
+
+function generateKeys()
+{
+    $response = Http::get('http://dappsgate.com:88'.'/api/v2/GenerateKeys');
+
+    $keys['PrivKey'] = $response->json('PrivKey');
+    $keys['PubKey']  = $response->json('PubKey');
+
+    return($keys);
+}
+
+function createAccount($name, $privateKey)
+{
+
+    $response = Http::post('http://dappsgate.com:88'.'/api/v2/CreateAccount', [
+        'Name' => $name,
+        'PrivKey' => $privateKey,
+        'Currency' => '0',
+        'Confirm' => '1',
+    ]);
+
+    $accountFields['result']      = $response->json('result');
+    $accountFields['text']        = $response->json('text');
+    $accountFields['TxID']        = $response->json('TxID');
+    $accountFields['BlockNum']    = $response->json('BlockNum');
+    $accountFields['TrNum']       = $response->json('TrNum');
+
+    return $accountFields;
+
 }
