@@ -38,6 +38,8 @@ class Empera
         $accountFields['BlockNum']    = $response->json('BlockNum');
         $accountFields['TrNum']       = $response->json('TrNum');
 
+        return $accountFields;
+
     }
 
     public function getBalance()

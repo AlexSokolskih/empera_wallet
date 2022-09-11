@@ -19,7 +19,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/', function(){
-     $BOT_TOKEN = '5717737611:AAHWBoCma3HawHq1xkxtRvniwPBUxMNAbK0'; // токен вашего бота
+    $BOT_TOKEN = '5717737611:AAHWBoCma3HawHq1xkxtRvniwPBUxMNAbK0'; // токен вашего бота
 
     $data = file_get_contents('php://input'); // весь ввод перенаправляем в $data
     $data = json_decode($data, true);
@@ -38,10 +38,10 @@ Route::post('/', function(){
 
         switch ($text) {
             case '/start':
-                $this->start($BOT_TOKEN, $chat_id);
+                start($BOT_TOKEN, $chat_id);
                 break;
             case '/new_wallet':
-                echo "i equals 1";
+                new_wallet($BOT_TOKEN, $chat_id);
                 break;
             case '/balance':
                 echo "i equals 2";
@@ -52,9 +52,28 @@ Route::post('/', function(){
     }
 });
 
+function new_wallet($BOT_TOKEN, $chat_id){
+    $keys = \App\Services\Empera::generateKeys();
+    $empera_wallet = new \App\Services\Empera($keys['PrivKey']);
+    $accountFields = $empera_wallet->createAccount($chat_id);
+
+
+
+    $text_return = "Создал
+    " . " Ключи
+    приватный: ".$keys['PrivKey']."
+    публичный: ".$keys['PubKey']."
+    result: ".$accountFields['result']. "
+    text: ". $accountFields['text'] ;
+
+    message_to_telegram($BOT_TOKEN, $chat_id, $text_return);
+}
+
 function start ($BOT_TOKEN, $chat_id){
 
-    $text_return = "Привет я empera_wallet_bot";
+    $text_return = "Привет я empera_wallet_bot
+    команды
+    /new_wallet /start /balance";
     $keyboard = json_encode([
         "inline_keyboard" => [
             [
