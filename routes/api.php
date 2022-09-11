@@ -18,8 +18,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/', function () {
-
-
-
-});
+Route::post('/', [\App\Http\Controllers\WalletController::class, 'index']);
