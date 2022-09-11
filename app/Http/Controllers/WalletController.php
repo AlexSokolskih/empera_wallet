@@ -49,11 +49,11 @@ class WalletController extends Controller
 
 
     // функция отправки сообщени в от бота в диалог с юзером
-    private function message_to_telegram( $chat_id, $text, $reply_markup = '')
+    private function message_to_telegram($BOT_TOKEN, $chat_id, $text, $reply_markup = '')
     {
         $ch = curl_init();
         $ch_post = [
-            CURLOPT_URL => 'https://api.telegram.org/bot' . BOT_TOKEN . '/sendMessage',
+            CURLOPT_URL => 'https://api.telegram.org/bot' . $BOT_TOKEN . '/sendMessage',
             CURLOPT_POST => TRUE,
             CURLOPT_RETURNTRANSFER => TRUE,
             CURLOPT_TIMEOUT => 10,
