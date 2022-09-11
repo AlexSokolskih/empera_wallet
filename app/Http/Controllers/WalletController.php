@@ -77,16 +77,16 @@ class WalletController extends Controller
             "inline_keyboard" => [
                 [
                     [
-                        "text" => "Yes",
-                        "callback_data" => "yes"
+                        "text" => "Новый",
+                        "callback_data" => "new"
                     ],
                     [
-                        "text" => "No",
-                        "callback_data" => "no"
+                        "text" => "Существующий",
+                        "callback_data" => "/start"
                     ],
                     [
-                        "text" => "Stop",
-                        "callback_data" => "stop"
+                        "text" => "Баланс",
+                        "callback_data" => "/balance"
                     ]
                 ]
             ]
