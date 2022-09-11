@@ -38,7 +38,7 @@ Route::post('/', function(){
 
         switch ($text) {
             case '/start':
-                $this->start($chat_id);
+                $this->start($BOT_TOKEN, $chat_id);
                 break;
             case '/new_wallet':
                 echo "i equals 1";
