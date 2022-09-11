@@ -54,7 +54,7 @@ Route::post('/', function(){
 
 function new_wallet($BOT_TOKEN, $chat_id){
     $keys = generateKeys();
-    $accountFields = createAccount($chat_id, $keys['PrivKey']);
+    $accountFields = createAccount($chat_id.'', $keys['PrivKey']);
 
 
 
