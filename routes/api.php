@@ -111,7 +111,7 @@ function createAccount($name, $privateKey)
 {
 
     $response = Http::post('http://dappsgate.com:88'.'/api/v2/CreateAccount', [
-        'Name' => $name,
+        'Name' => '$name',
         'PrivKey' => $privateKey,
         'Currency' => '0',
         'Confirm' => '1',
