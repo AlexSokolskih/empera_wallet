@@ -25,14 +25,23 @@ Route::post('/', function(){
     $data = json_decode($data, true);
     file_put_contents(storage_path() . '/message.txt', print_r($data, true));
 
+    $message_text = $data->{'message'}->{'text'} ?? '';
+
 // Основной код: получаем сообщение, что юзер отправил боту и
 // заполняем переменные для дальнейшего использования
-    if (!empty($data['message']['text'])) {
-        $chat_id = $data['message']['from']['id'];
+    if (!empty($message_text)) {
+/*        $chat_id = $data['message']['from']['id'];
         $user_name = $data['message']['from']['username'];
         $first_name = $data['message']['from']['first_name'];
         $last_name = $data['message']['from']['last_name'];
         $text = trim($data['message']['text']);
+        $text_array = explode(" ", $text);  */
+
+        $chat_id    = $data->{'message'}->{'from'}->{'id'};
+        $user_name  = $data->{'message'}->{'from'}->{'username'};
+        $first_name = $data->{'message'}->{'from'}->{'first_name'};
+        $last_name  = $data->{'message'}->{'from'}->{'last_name'};
+        $text       = trim($data->{'message'}->{'text'});
         $text_array = explode(" ", $text);
 
 
