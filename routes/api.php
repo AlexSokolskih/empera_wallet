@@ -18,6 +18,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+/*Route::get('/', function(){
+    $BOT_TOKEN = '5717737611:AAHWBoCma3HawHq1xkxtRvniwPBUxMNAbK0'; // токен вашего бота
+
+    $data = $_GET; //file_get_contents('php://input'); // весь ввод перенаправляем в $data
+    $data = json_encode($data);
+    file_put_contents(storage_path() . '/message.txt', print_r($data, true));
+});*/
+
 Route::post('/', function(){
     $BOT_TOKEN = '5717737611:AAHWBoCma3HawHq1xkxtRvniwPBUxMNAbK0'; // токен вашего бота
 
