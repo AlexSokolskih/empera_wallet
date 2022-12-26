@@ -56,7 +56,7 @@ jobs:
           HOST: 37.140.192.145
           USERNAME: xaam1@ya.ru
           PORT: 22
-          KEY: {{ secrets.SSHKEY }}
+          KEY: ${{ secrets.SSHKEY }}
         with:
           source: "${{ secrets.SITE }}.tar"
           target: "~/github"
