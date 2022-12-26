@@ -60,3 +60,11 @@ jobs:
         with:
           source: "${{ secrets.SITE }}.tar"
           target: "~/github"
+      - name: Удаляем старые файлы из временной дирректории
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          USERNAME: ${{ secrets.USERNAME }}
+          PORT: ${{ secrets.PORT }}
+          KEY: ${{ secrets.SSHKEY }}
+          script: cd ~/github/ && rm -Rfv ${{ secrets.SITE }}
