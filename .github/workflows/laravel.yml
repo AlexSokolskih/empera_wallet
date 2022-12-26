@@ -54,7 +54,7 @@ jobs:
         uses: appleboy/scp-action@master
         env:
           HOST: 37.140.192.145
-          USERNAME: xaam1@ya.ru
+          USERNAME: u1782726
           PORT: 22
           KEY: ${{ secrets.SSHKEY }}
         with:
