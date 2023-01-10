@@ -68,7 +68,14 @@ jobs:
           PORT: ${{ secrets.PORT }}
           KEY: ${{ secrets.SSHKEY }}
           script: cd ~/github/ && rm -Rfv ${{ secrets.SITE }}
-
+      - name: Разархивуруем архив
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          USERNAME: ${{ secrets.USERNAME }}
+          PORT: ${{ secrets.PORT }}
+          KEY: ${{ secrets.SSHKEY }}
+          script: cd ~/github && tar -xvf ${{ secrets.SITE }}.tar
       - name: Пишем файлы в рабочий каталог
         uses: appleboy/ssh-action@master
         with:
@@ -76,5 +83,12 @@ jobs:
           USERNAME: ${{ secrets.USERNAME }}
           PORT: ${{ secrets.PORT }}
           KEY: ${{ secrets.SSHKEY }}
-          script: cd ~/github && tar -xvf ${{ secrets.SITE }}.tar && rsync -avy --delete --exclude 'export' --exclude '.git' --exclude '.github' ~/github/${{ secrets.SITE }}/  ~/www/${{ secrets.SITE }} && scp -r ~/github/Keys ~/www/sokolskikh.fun/ && scp -r ~/github/Certs ~/www/sokolskikh.fun/app/
-
+          script: cd ~/github && rsync -avy --delete --exclude 'export' --exclude '.git' --exclude '.github' --exclude '.env' ~/github/empera_wallet/ ~/www/${{ secrets.SITE }}
+      - name: Composer
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          USERNAME: ${{ secrets.USERNAME }}
+          PORT: ${{ secrets.PORT }}
+          KEY: ${{ secrets.SSHKEY }}
+          script: cd ~/www/${{ secrets.SITE }} && /opt/php/7.4/bin/php ~/bin/composer install
