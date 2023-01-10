@@ -60,7 +60,7 @@ jobs:
         with:
           source: "${{ secrets.SITE }}.tar"
           target: "~/github"
-      - name: Удаляем старые файлы из временной дирректории
+      - name: Удаляем старые файлы из временной директории
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
@@ -69,11 +69,12 @@ jobs:
           KEY: ${{ secrets.SSHKEY }}
           script: cd ~/github/ && rm -Rfv ${{ secrets.SITE }}
 
-      - name: Удаляем файлы из временной дирректории
+      - name: Пишем файлы в рабочий каталог
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
           USERNAME: ${{ secrets.USERNAME }}
           PORT: ${{ secrets.PORT }}
           KEY: ${{ secrets.SSHKEY }}
-          script: cd ~/github/ && rm -Rfv ${{ secrets.SITE }}
+          script: cd ~/github && tar -xvf ${{ secrets.SITE }}.tar && rsync -avy --delete --exclude 'export' --exclude '.git' --exclude '.github' ~/github/${{ secrets.SITE }}/  ~/www/${{ secrets.SITE }} && scp -r ~/github/Keys ~/www/sokolskikh.fun/ && scp -r ~/github/Certs ~/www/sokolskikh.fun/app/
+
